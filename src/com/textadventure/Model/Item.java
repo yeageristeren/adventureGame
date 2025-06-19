@@ -4,7 +4,7 @@ public class Item {
     private String name;
     private String description;
 
-    Item(String itemName, String itemDescription) {
+    public Item(String itemName, String itemDescription) {
         if (name == null || name.trim().isEmpty()) {
             throw new IllegalArgumentException("Item name cannot be null or empty.");
         }

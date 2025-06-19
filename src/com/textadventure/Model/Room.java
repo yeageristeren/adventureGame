@@ -10,7 +10,7 @@ public class Room {
     private HashMap<String, String> exits = new HashMap<>();
     private ArrayList<Item> items = new ArrayList<>();
 
-    Room(String name, String description, HashMap<String, String> exit, ArrayList<Item> items) {
+    public Room(String name, String description) {
         if (name == null || name.trim().isEmpty()) {
             throw new IllegalArgumentException("Room name cannot be null or empty.");
         }
@@ -51,6 +51,6 @@ public class Room {
         if(roomName==null||direction==null){
             throw new IllegalArgumentException("Invalid item: NULL");
         }
-        exits.put(direction.trim().toUpperCase(),roomName.trim());
+        exits.put(direction.trim().toLowerCase(),roomName.trim());
     }
 }
