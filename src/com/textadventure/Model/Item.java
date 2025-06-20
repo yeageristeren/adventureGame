@@ -5,10 +5,10 @@ public class Item {
     private String description;
 
     public Item(String itemName, String itemDescription) {
-        if (name == null || name.trim().isEmpty()) {
+        if (itemName == null || itemName.trim().isEmpty()) {
             throw new IllegalArgumentException("Item name cannot be null or empty.");
         }
-        if (description == null) {
+        if (itemDescription == null) {
             throw new IllegalArgumentException("Item description cannot be null.");
         }
         this.name = itemName;

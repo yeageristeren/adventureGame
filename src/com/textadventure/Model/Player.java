@@ -23,7 +23,7 @@ public class Player {
 
     public void setCurrentRoomName(String roomName){
         if(roomName.trim().isEmpty()||roomName==null){
-            throw new IllegalArgumentException("The roomname cant be empty");
+            throw new IllegalArgumentException("The room name cant be empty");
         }
     }
 

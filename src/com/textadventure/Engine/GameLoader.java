@@ -109,7 +109,6 @@ public class GameLoader {
             if (loadedItems.containsKey(itemName)) {
                 throw new GameDataException("Duplicate item name found in JSON: '" + itemName + "'");
             }
-
             String itemDesc= (itemData.description==null || itemData.description.trim().isEmpty())? "An Item" : itemData.description;
             Item item = new Item(itemName,itemDesc);
             loadedItems.put(itemName,item);

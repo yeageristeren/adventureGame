@@ -11,7 +11,7 @@ import java.util.HashMap;
 public class Game {
     private HashMap<String, Room> roomHashMap;
     private Player player;
-    private GameLoader gameloader ;
+    private final GameLoader gameloader ;
 
 
     Game(){
