@@ -34,7 +34,7 @@ public class Game {
         } else {
             startRoomName = gameloader.getPlayerStart();
         }
-        Player player = new Player(startRoomName);
+        this.player = new Player(startRoomName);
 
         System.out.println("[Initialize] Player object created.");
         System.out.println("[Initialize] Player starting room set to: '" + startRoomName + "'.");

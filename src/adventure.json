@@ -1,46 +1,77 @@
 {
-  "playerStart": "Forest Clearing",
+  "playerStart": "Abandoned Camp",
 
   "items": [
     {
-      "name": "shiny stone",
-      "description": "A smooth, grey stone that catches the light in an interesting way."
+      "name": "rusty key",
+      "description": "An old iron key, its surface corroded. It might open something ancient."
     },
     {
-      "name": "old map",
-      "description": "A brittle piece of parchment with crude drawings. It seems to depict a series of caves."
+      "name": "torch",
+      "description": "A wooden torch soaked in pitch. Useful for dark places — if you can find a way to light it."
+    },
+    {
+      "name": "torn journal",
+      "description": "Pages filled with frantic handwriting. Mentions something about a guardian deep underground."
+    },
+    {
+      "name": "ancient medallion",
+      "description": "A heavy bronze medallion etched with runes. It vibrates faintly in your hand."
     }
   ],
 
   "rooms": [
     {
-      "name": "Forest Clearing",
-      "description": "You are in a small clearing surrounded by tall trees. Sunlight dapples through the leaves. To the east, you see the dark mouth of a cave.",
+      "name": "Abandoned Camp",
+      "description": "Scattered tents and ash from a long-dead fire. The forest looms to the north, and a path winds eastward.",
       "exits": {
-        "east": "Cave Entrance"
+        "north": "Overgrown Forest",
+        "east": "Stone Bridge"
       },
       "items": [
-        "shiny stone"
+        "torch",
+        "torn journal"
       ]
     },
     {
-      "name": "Cave Entrance",
-      "description": "You stand at the entrance of a dark, damp cave. A chill wind blows from within. The clearing is back to the west, and a narrow tunnel leads north.",
+      "name": "Overgrown Forest",
+      "description": "Thick foliage blocks sunlight. Strange whispers echo around you. A crumbling trail leads south, and a stone archway to the west catches your eye.",
       "exits": {
-        "west": "Forest Clearing",
-        "north": "Dark Tunnel"
+        "south": "Abandoned Camp",
+        "west": "Sealed Vault"
       },
       "items": []
     },
     {
-      "name": "Dark Tunnel",
-      "description": "It's much darker here in this narrow tunnel. Water drips steadily from the ceiling. You can barely make out the cave entrance to the south. Something lies on the ground here.",
+      "name": "Stone Bridge",
+      "description": "A moss-covered bridge crosses a dark chasm. Beyond it, you see the entrance to an ancient structure.",
       "exits": {
-        "south": "Cave Entrance"
+        "west": "Abandoned Camp",
+        "east": "Vault Antechamber"
       },
       "items": [
-        "old map"
+        "rusty key"
       ]
+    },
+    {
+      "name": "Vault Antechamber",
+      "description": "The air is cold here. Symbols on the wall glow faintly. To the north is a heavy door with a round indentation at its center.",
+      "exits": {
+        "west": "Stone Bridge",
+        "north": "Sealed Vault"
+      },
+      "items": [
+        "ancient medallion"
+      ]
+    },
+    {
+      "name": "Sealed Vault",
+      "description": "You've entered a chamber untouched by time. Dust hangs thick in the air. You feel an overwhelming sense of power and dread.",
+      "exits": {
+        "east": "Overgrown Forest",
+        "south": "Vault Antechamber"
+      },
+      "items": []
     }
   ]
 }

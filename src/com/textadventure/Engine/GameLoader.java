@@ -95,9 +95,7 @@ public class GameLoader {
         if (gameData.playerStart == null || gameData.playerStart.trim().isEmpty()) {
             throw new GameDataException("'playerStart' field not found, null, or empty in JSON. Cannot determine starting room.");
         }
-
-        if(gameData.playerStart!=null&& !gameData.playerStart.trim().isEmpty()){
-        String playerStart= gameData.playerStart.trim();}
+        playerStart= gameData.playerStart.trim();
 
         //loading items
         for(ItemData itemData:gameData.items){

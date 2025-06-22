@@ -3,9 +3,12 @@ package com.textadventure.Game;
 
 import com.google.gson.JsonSyntaxException;
 import com.textadventure.Engine.GameLoader;
+import com.textadventure.Model.Item;
 import com.textadventure.Model.Room;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Main {
     public static void main(String[] args){
@@ -61,8 +64,28 @@ public class Main {
                 gameRunning=false;
                 break;
             }
-            System.out.println("You are in "+ currentRoom.getName());
-            System.out.println("This is a "+currentRoom.getDescription());
+            System.out.println("----------------------");
+            System.out.println("Current Location : "+ currentRoom.getName());
+            System.out.println(currentRoom.getDescription());
+            ArrayList<Item> roomItems=currentRoom.getItems();
+            System.out.print("Items : | ");
+            if(roomItems==null){
+                System.out.println("No items.");
+            }else{
+                for(Item item:roomItems){
+                    System.out.print(item.getItemName()+" | ");
+                }
+            }
+            System.out.println();
+            HashMap<String,String> roomExits = currentRoom.getExits();
+            if(roomExits==null){
+                System.out.println("No Path Ahead.");}
+            else{
+
+            }
+
+            System.out.println("-------------------");
+
             break;
         }
     }
