@@ -81,7 +81,11 @@ public class Main {
             if(roomExits==null){
                 System.out.println("No Path Ahead.");}
             else{
-
+                System.out.print("Exits : ");
+                for(String direction:roomExits.keySet()){
+                    System.out.print(direction+" ");
+                }
+                System.out.println();
             }
 
             System.out.println("-------------------");
