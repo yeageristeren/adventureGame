@@ -39,13 +39,13 @@ public class Room {
         if(item==null){
             throw new IllegalArgumentException("Invalid item: NULL");
         }
-        items.add(item);
+        this.items.add(item);
     }
     public boolean removeItem(Item item){
         if(item==null){
             throw new IllegalArgumentException("Invalid item: NULL");
         }
-        return items.remove(item);//returns whether the item is removed
+        return this.items.remove(item);//returns whether the item is removed
     }
     public void addExit(String direction,String roomName){
         if(roomName==null||direction==null){

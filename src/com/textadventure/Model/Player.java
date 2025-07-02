@@ -25,6 +25,7 @@ public class Player {
         if(roomName.trim().isEmpty()||roomName==null){
             throw new IllegalArgumentException("The room name cant be empty");
         }
+        this.currentRoomName=roomName;
     }
 
     public void takeItem(Item item){

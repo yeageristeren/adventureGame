@@ -2,7 +2,7 @@ package com.textadventure.Engine;
 
 public class CommandParser {
 
-    CommandParser(){
+    public CommandParser(){
 
     }
 

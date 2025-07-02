@@ -2,16 +2,21 @@ package com.textadventure.Game;
 
 
 import com.google.gson.JsonSyntaxException;
+import com.textadventure.Engine.CommandParser;
 import com.textadventure.Engine.GameLoader;
 import com.textadventure.Model.Item;
 import com.textadventure.Model.Room;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args){
+        Scanner sc = new Scanner(System.in);
+        CommandParser parser=new CommandParser();
         System.out.println("Welcome to the Adventure game");
         Game game = new Game();
         String dataPath="src/adventure.json";
@@ -54,14 +59,12 @@ public class Main {
         e.printStackTrace();
         return;
     }
-        boolean gameRunning = true;
         System.out.println("\n[Main] Entering main game loop...");
-        while(gameRunning){
+        while(true){
 
             Room currentRoom= game.getCurrentRoom();
             if(currentRoom==null){
                 System.err.println("\n[Main] FATAL ERROR: Cannot determine player's current location.");
-                gameRunning=false;
                 break;
             }
             System.out.println("----------------------");
@@ -69,7 +72,7 @@ public class Main {
             System.out.println(currentRoom.getDescription());
             ArrayList<Item> roomItems=currentRoom.getItems();
             System.out.print("Items : | ");
-            if(roomItems==null){
+            if(roomItems==null||roomItems.isEmpty()){
                 System.out.println("No items.");
             }else{
                 for(Item item:roomItems){
@@ -90,7 +93,20 @@ public class Main {
 
             System.out.println("-------------------");
 
-            break;
+            System.out.print("Command : ");String cmd = sc.nextLine().toLowerCase();
+            String[] cmds = parser.parse(cmd);
+            System.out.println(Arrays.toString(cmds));
+            if(cmds[0]!=null){
+                if(cmds[0].equals("quit") || cmds[0].equals("exit")){
+                    System.out.println("-------------------");
+                    System.out.println("Quiting the game.");
+                    System.out.println("-------------------");
+                    break;
+                }else{
+                    game.processCommand(cmds);
+                }
+            }
         }
+        sc.close();
     }
 }
