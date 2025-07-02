@@ -96,6 +96,9 @@ public class Main {
             System.out.print("Command : ");String cmd = sc.nextLine().toLowerCase();
             String[] cmds = parser.parse(cmd);
             System.out.println(Arrays.toString(cmds));
+            if(cmds==null){
+                System.out.println("Type a command...");continue;
+            }
             if(cmds[0]!=null){
                 if(cmds[0].equals("quit") || cmds[0].equals("exit")){
                     System.out.println("-------------------");
