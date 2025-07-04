@@ -1,75 +1,176 @@
 {
-  "playerStart": "Abandoned Camp",
-
+  "playerStart": "Basement Cell",
   "items": [
     {
-      "name": "rusty key",
-      "description": "An old iron key, its surface corroded. It might open something ancient."
+      "name": "crowbar",
+      "description": "A heavy iron bar. Perfect for forcing doors.",
+      "usability": {
+        "target": "Metal Door",
+        "effectDescription": "You wedge the crowbar into the door's seam and pull. With a screech, it pries open.",
+        "consumesItem": false,
+        "unlocksExit": "north",
+        "removesTarget": null,
+        "addsTarget": null,
+        "changesRoomDescriptionTo": null,
+        "addsItemToInventory": null
+      }
     },
     {
-      "name": "torch",
-      "description": "A wooden torch soaked in pitch. Useful for dark places — if you can find a way to light it."
+      "name": "bolt cutters",
+      "description": "Industrial-strength cutters. Can sever thick chains.",
+      "usability": {
+        "target": "Chained Door",
+        "effectDescription": "The bolt cutters slice through the chain with effort. The way is now clear.",
+        "consumesItem": false,
+        "unlocksExit": "north",
+        "removesTarget": null,
+        "addsTarget": null,
+        "changesRoomDescriptionTo": null,
+        "addsItemToInventory": null
+      }
     },
     {
-      "name": "torn journal",
-      "description": "Pages filled with frantic handwriting. Mentions something about a guardian deep underground."
+      "name": "fuse",
+      "description": "A 20-amp electrical fuse. Might restore power.",
+      "usability": {
+        "target": "Generator Room",
+        "effectDescription": "You slot the fuse into place. The generator hums to life.",
+        "consumesItem": true,
+        "unlocksExit": null,
+        "removesTarget": null,
+        "addsTarget": null,
+        "changesRoomDescriptionTo": "The room is now brightly lit. Electricity flows through the cables.",
+        "addsItemToInventory": null
+      }
     },
     {
-      "name": "ancient medallion",
-      "description": "A heavy bronze medallion etched with runes. It vibrates faintly in your hand."
+      "name": "wrench",
+      "description": "A rusted but usable wrench. Could loosen bolts."
+    },
+    {
+      "name": "generator key",
+      "description": "Small brass key labeled 'GEN'.",
+      "usability": {
+        "target": "Exit Gate",
+        "effectDescription": "You insert the key into the control panel. The sparks die down, and the gate powers off.",
+        "consumesItem": false,
+        "unlocksExit": "east",
+        "removesTarget": null,
+        "addsTarget": null,
+        "changesRoomDescriptionTo": "The control panel glows green. The gate is safe to touch.",
+        "addsItemToInventory": null
+      }
+    },
+    {
+      "name": "rusty chest",
+      "description": "A small, sturdy chest bound with rusty iron bands. It appears to be locked."
+    },
+    {
+      "name": "small key",
+      "description": "A small, tarnished brass key. Seems designed for a simple lock.",
+      "usability": {
+        "target": "rusty chest",
+        "effectDescription": "You insert the small key into the lock of the rusty chest and turn. *Click!* The lid springs open.",
+        "consumesItem": false,
+        "unlocksExit": null,
+        "removesTarget": "rusty chest",
+        "addsTarget": "open chest",
+        "changesRoomDescriptionTo": null,
+        "addsItemToInventory": null
+      }
+    },
+    {
+      "name": "open chest",
+      "description": "The chest is now open, revealing its contents.",
+      "items": ["gold coin"]
+    },
+    {
+      "name": "health potion",
+      "description": "A vial containing a bubbling red liquid.",
+      "usability": {
+        "target": "self",
+        "effectDescription": "You drink the potion. You feel invigorated!",
+        "consumesItem": true,
+        "unlocksExit": null,
+        "removesTarget": null,
+        "addsTarget": null,
+        "changesRoomDescriptionTo": null,
+        "addsItemToInventory": null
+      }
+    },
+    {
+      "name": "gold coin",
+      "description": "A gleaming coin of pure gold. Must be valuable."
     }
   ],
-
   "rooms": [
     {
-      "name": "Abandoned Camp",
-      "description": "Scattered tents and ash from a long-dead fire. The forest looms to the north, and a path winds eastward.",
+      "name": "Basement Cell",
+      "description": "A concrete prison cell. The only light comes from under a metal door (north). A vent cover (east) is loose.",
       "exits": {
-        "north": "Overgrown Forest",
-        "east": "Stone Bridge"
+        "north": "Metal Door",
+        "east": "Vent Tunnel"
       },
-      "items": [
-        "torch",
-        "torn journal"
-      ]
+      "items": ["wrench"]
     },
     {
-      "name": "Overgrown Forest",
-      "description": "Thick foliage blocks sunlight. Strange whispers echo around you. A crumbling trail leads south, and a stone archway to the west catches your eye.",
+      "name": "Metal Door",
+      "description": "A reinforced steel door. The handle is broken off.",
       "exits": {
-        "south": "Abandoned Camp",
-        "west": "Sealed Vault"
+        "south": "Basement Cell"
       },
       "items": []
     },
     {
-      "name": "Stone Bridge",
-      "description": "A moss-covered bridge crosses a dark chasm. Beyond it, you see the entrance to an ancient structure.",
+      "name": "Vent Tunnel",
+      "description": "A cramped air duct. It leads to a larger room (north) and back to the cell (west).",
       "exits": {
-        "west": "Abandoned Camp",
-        "east": "Vault Antechamber"
+        "west": "Basement Cell",
+        "north": "Boiler Room"
       },
-      "items": [
-        "rusty key"
-      ]
+      "items": []
     },
     {
-      "name": "Vault Antechamber",
-      "description": "The air is cold here. Symbols on the wall glow faintly. To the north is a heavy door with a round indentation at its center.",
+      "name": "Boiler Room",
+      "description": "A hot, noisy room with a broken generator (needs fuse). A toolbox sits on a shelf.",
       "exits": {
-        "west": "Stone Bridge",
-        "north": "Sealed Vault"
+        "south": "Vent Tunnel",
+        "west": "Utility Hall"
       },
-      "items": [
-        "ancient medallion"
-      ]
+      "items": ["fuse", "generator key", "bolt cutters"]
     },
     {
-      "name": "Sealed Vault",
-      "description": "You've entered a chamber untouched by time. Dust hangs thick in the air. You feel an overwhelming sense of power and dread.",
+      "name": "Utility Hall",
+      "description": "A long hallway with flickering lights. A chained door (north) blocks the exit.",
       "exits": {
-        "east": "Overgrown Forest",
-        "south": "Vault Antechamber"
+        "east": "Boiler Room",
+        "north": "Chained Door"
+      },
+      "items": ["crowbar"]
+    },
+    {
+      "name": "Chained Door",
+      "description": "A heavy door secured by industrial chains. The links look cuttable.",
+      "exits": {
+        "south": "Utility Hall",
+        "north": "Generator Room"
+      },
+      "items": []
+    },
+    {
+      "name": "Generator Room",
+      "description": "A dark room humming with electricity. The main generator (needs key) powers the exit gate (east).",
+      "exits": {
+        "south": "Chained Door",
+        "east": "Exit Gate"
+      },
+      "items": []
+    },
+    {
+      "name": "Exit Gate",
+      "description": "An electrified gate. The control panel sparks dangerously.",
+      "exits": {
+        "west": "Generator Room"
       },
       "items": []
     }

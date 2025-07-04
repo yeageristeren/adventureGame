@@ -3,8 +3,9 @@ package com.textadventure.Model;
 public class Item {
     private String name;
     private String description;
+    private Usability usability;
 
-    public Item(String itemName, String itemDescription) {
+    public Item(String itemName, String itemDescription,Usability usability) {
         if (itemName == null || itemName.trim().isEmpty()) {
             throw new IllegalArgumentException("Item name cannot be null or empty.");
         }
@@ -13,6 +14,7 @@ public class Item {
         }
         this.name = itemName;
         this.description = itemDescription;
+        this.usability=usability;
     }
 
     public String getItemName() {
@@ -20,5 +22,8 @@ public class Item {
     }
     public String getItemDescription() {
         return description;
+    }
+    public Usability getUsability(){
+        return this.usability;
     }
 }

@@ -62,9 +62,15 @@ public class Main {
         System.out.println("\n[Main] Entering main game loop...");
         while(true){
 
+
             Room currentRoom= game.getCurrentRoom();
             if(currentRoom==null){
                 System.err.println("\n[Main] FATAL ERROR: Cannot determine player's current location.");
+                break;
+            }
+            if(currentRoom.getName().equalsIgnoreCase("sewer grate")){
+                System.out.println("Wohoooo!!!!! You have escaped.");
+                System.out.println("Enjoy your freedom...");
                 break;
             }
             System.out.println("----------------------");
@@ -95,7 +101,6 @@ public class Main {
 
             System.out.print("Command : ");String cmd = sc.nextLine().toLowerCase();
             String[] cmds = parser.parse(cmd);
-            System.out.println(Arrays.toString(cmds));
             if(cmds==null){
                 System.out.println("Type a command...");continue;
             }

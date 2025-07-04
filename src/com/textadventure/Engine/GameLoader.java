@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.textadventure.Model.Item;
 import com.textadventure.Model.Room;
+import com.textadventure.Model.Usability;
 
 import java.io.IOException;
 import java.nio.file.*;
@@ -22,11 +23,13 @@ class RoomData{
     String description;
     ArrayList<String> items = new ArrayList<>();
     HashMap<String,String> exits=new HashMap<>();
+    String requiredItem;
 }
 
 class ItemData{
     String name;
     String description;
+    Usability usability;
 }
 
 
@@ -37,11 +40,12 @@ public class GameLoader {
     private String playerStart;
     private HashMap<String, Item> loadedItems;
     private HashMap<String, Room> loadedRooms;
+    private HashMap<Room,Item> requiredItemHash;
 
     public GameLoader(){
         loadedItems=new HashMap<>();
         loadedRooms=new HashMap<>();
-
+        requiredItemHash=new HashMap<>();
     }
 
     public void loadGameData(String filePath) throws IOException, JsonSyntaxException,IllegalArgumentException, GameDataException {
@@ -95,6 +99,8 @@ public class GameLoader {
         if (gameData.playerStart == null || gameData.playerStart.trim().isEmpty()) {
             throw new GameDataException("'playerStart' field not found, null, or empty in JSON. Cannot determine starting room.");
         }
+
+
         playerStart= gameData.playerStart.trim();
 
         //loading items
@@ -108,7 +114,7 @@ public class GameLoader {
                 throw new GameDataException("Duplicate item name found in JSON: '" + itemName + "'");
             }
             String itemDesc= (itemData.description==null || itemData.description.trim().isEmpty())? "An Item" : itemData.description;
-            Item item = new Item(itemName,itemDesc);
+            Item item = new Item(itemName,itemDesc, itemData.usability);
             loadedItems.put(itemName,item);
             System.out.println("item: "+itemName+" created");
         }
@@ -168,7 +174,8 @@ public class GameLoader {
             }else{
                 System.out.println(currentRoomName+" has no items available");
             }
-    }}
+    }
+    }
 
     public String getPlayerStart() {
         return this.playerStart;
@@ -181,8 +188,6 @@ public class GameLoader {
     public HashMap<String, Item> getLoadedItems() {
         return this.loadedItems;
     }
-
-
     public static class GameDataException extends Exception{
         public GameDataException(String msg){
             super(msg);

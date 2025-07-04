@@ -6,11 +6,14 @@ import com.textadventure.Engine.GameLoader;
 import com.textadventure.Model.Item;
 import com.textadventure.Model.Player;
 import com.textadventure.Model.Room;
+import com.textadventure.Model.Usability;
+
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Optional;
 
 class SaveState{
     String playerCurrentLocation;
@@ -59,6 +62,7 @@ public class Game {
         }
         this.player = new Player(startRoomName);
 
+
         System.out.println("[Initialize] Player object created.");
         System.out.println("[Initialize] Player starting room set to: '" + startRoomName + "'.");
         System.out.println("----------------------------------------");
@@ -99,7 +103,6 @@ public class Game {
                     String itemName="";
                     for(int i =1;i< cmds.length;i++){itemName=itemName+" "+cmds[i];}
                     itemName=itemName.trim();
-                    System.out.println(itemName);
                     ArrayList<Item> items = room.getItems();
                     for(Item item:new ArrayList<>(items)){ // using a copy of the list to avoid exceptions that is caused by modification of the iterator
                         if(item.getItemName().equals(itemName)){
@@ -164,6 +167,89 @@ public class Game {
                     System.out.println("successfully loaded room state");
                 } catch (Exception e) {
                     System.out.println("cant read the json saved state");
+                }
+                return;
+            case "use":
+                String itemName="";
+                String targetName="";
+                String iter="";
+                for(String cmd:cmds){
+                    if(cmd.equals("use")){continue;}
+                    if (cmd.equals("on")) {
+                        itemName=iter.trim();
+                        iter="";
+                    }else{
+                        iter=iter+" "+cmd;
+                    }
+                }
+                targetName=iter.trim();
+                System.out.println(itemName+targetName);
+                if(itemHashMap.containsKey(itemName)){
+                    Item item = itemHashMap.get(itemName);
+                    if(!this.player.getInventory().contains(item)){
+                        System.out.println("you dont have this item...");
+                        return;
+                    }
+                    Usability usability = item.getUsability();
+                    if(usability==null){
+                        System.out.println("this item is non-usable");
+                        return;
+                    }
+                    if(!usability.getTarget().equals(targetName)){
+                        System.out.println("cant use this item on target");
+                        return;
+                    }
+
+                    if(!usability.getEffectDescription().isEmpty()){
+                        System.out.println(usability.getEffectDescription());
+                    }else{
+                        System.out.println("used "+itemName+" on "+targetName);
+                    }
+
+                    if(usability.isConsumesItem()){
+                        this.player.dropItem(item);
+                    }
+
+                    boolean targetPresent=false;
+                    if(usability.getTarget().equals("self")){targetPresent=true;}
+                    else{
+                        Item targetItem=itemHashMap.get(targetName);
+                        if(room.getItems().contains(targetItem)){targetPresent=true;}
+                    }
+                    if(!targetPresent){
+                        System.out.println("target not present");return;}
+
+                    if(usability.getRemovesTarget()!=null&&room.getItems().contains(itemHashMap.get(usability.getRemovesTarget()))){
+                        Item targetItem = itemHashMap.get(usability.getRemovesTarget());
+                        room.removeItem(targetItem);
+                        System.out.println("Removed "+usability.getRemovesTarget()+" from the room");
+                    }
+
+                    if(usability.getAddsTarget()!=null){
+                        Optional<Item> targetItem = Optional.of(itemHashMap.get(usability.getAddsTarget()));
+                        if(targetItem.isPresent()){
+                            room.addItem(targetItem.get());
+                            System.out.println("Added "+targetItem.get().getItemName()+" to the room");
+                        }
+                    }
+
+                    if(usability.getChangesRoomDescriptionTo()!=null){
+                        room.setDescription(usability.getEffectDescription());
+                        System.out.println("Changed the room appearance");
+                    }
+
+                    if(usability.getAddsItemToInventory()!=null){
+                        Optional<Item> toAddItem = Optional.of(itemHashMap.get(usability.getAddsItemToInventory()));
+                        if(toAddItem.isPresent()){
+                            this.player.getInventory().add(toAddItem.get());
+                            System.out.println("Added "+toAddItem.get().getItemName()+" to the player inventory");
+                        }
+                    }
+
+
+
+                }else{
+                    System.out.println("No such item exists.");
                 }
                 return;
             default:

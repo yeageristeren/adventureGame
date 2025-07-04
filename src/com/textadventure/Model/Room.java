@@ -53,4 +53,7 @@ public class Room {
         }
         exits.put(direction.trim().toLowerCase(),roomName.trim());
     }
+    public void setDescription(String description){
+        this.description=description;
+    }
 }
