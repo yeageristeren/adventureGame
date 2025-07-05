@@ -4,6 +4,7 @@ package com.textadventure.Game;
 import com.google.gson.JsonSyntaxException;
 import com.textadventure.Engine.CommandParser;
 import com.textadventure.Engine.GameLoader;
+import com.textadventure.Model.Condition;
 import com.textadventure.Model.Item;
 import com.textadventure.Model.Room;
 
@@ -86,7 +87,7 @@ public class Main {
                 }
             }
             System.out.println();
-            HashMap<String,String> roomExits = currentRoom.getExits();
+            HashMap<String, Condition> roomExits = currentRoom.getExits();
             if(roomExits==null){
                 System.out.println("No Path Ahead.");}
             else{

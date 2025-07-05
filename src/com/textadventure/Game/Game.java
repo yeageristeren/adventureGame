@@ -3,10 +3,7 @@ package com.textadventure.Game;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.textadventure.Engine.GameLoader;
-import com.textadventure.Model.Item;
-import com.textadventure.Model.Player;
-import com.textadventure.Model.Room;
-import com.textadventure.Model.Usability;
+import com.textadventure.Model.*;
 
 
 import java.io.*;
@@ -70,6 +67,14 @@ public class Game {
         System.out.println("----------------------------------------");
     }
 
+    public boolean checkCondition(Condition condition){
+        if(condition.getRequiredItem()==null||condition.getTargetRoom().isEmpty()){return true;}
+            String itemName = condition.getRequiredItem();
+            Item item = itemHashMap.get(itemName);
+            if(!this.player.getInventory().contains(item)){return false;}
+            else{return true;}
+    }
+
     public void processCommand(String[] cmds){
         Room room = roomHashMap.get(this.player.getCurrentRoomName());
         String proverb = cmds[0];
@@ -77,13 +82,24 @@ public class Game {
             case "go" :
                 if(cmds.length==2){
                     String direction = cmds[1];
-                    HashMap<String,String> exit = room.getExits();
+                    HashMap<String, Condition> exit = room.getExits();
                     if(!exit.containsKey(direction)){
                         System.out.println("This path has no exit.");
                     }else{
-                        String pathRoom = exit.get(direction);
-                        this.player.setCurrentRoomName(pathRoom);
-                        System.out.println("Successfully travelled.");
+                        Condition condition = room.getExits().get(direction);
+                        boolean check = checkCondition(condition);
+                        if(!roomHashMap.containsKey(condition.getTargetRoom())){
+                            System.out.println("the target room in this direction does not exist");
+                            return;
+                        }
+                        if(!check){
+                            System.out.println(condition.getFailMsg());
+                            return;
+                        }else{
+                            String pathRoom = exit.get(direction).getTargetRoom();
+                            this.player.setCurrentRoomName(pathRoom);
+                            System.out.println("Successfully travelled.");
+                        }
                     }
                 }else{
                     System.out.println("Enter the right direction you want to go.");

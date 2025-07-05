@@ -2,6 +2,7 @@ package com.textadventure.Engine;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
+import com.textadventure.Model.Condition;
 import com.textadventure.Model.Item;
 import com.textadventure.Model.Room;
 import com.textadventure.Model.Usability;
@@ -22,8 +23,7 @@ class RoomData{
     String name;
     String description;
     ArrayList<String> items = new ArrayList<>();
-    HashMap<String,String> exits=new HashMap<>();
-    String requiredItem;
+    HashMap<String, Condition> exits=new HashMap<>();
 }
 
 class ItemData{
@@ -40,12 +40,10 @@ public class GameLoader {
     private String playerStart;
     private HashMap<String, Item> loadedItems;
     private HashMap<String, Room> loadedRooms;
-    private HashMap<Room,Item> requiredItemHash;
 
     public GameLoader(){
         loadedItems=new HashMap<>();
         loadedRooms=new HashMap<>();
-        requiredItemHash=new HashMap<>();
     }
 
     public void loadGameData(String filePath) throws IOException, JsonSyntaxException,IllegalArgumentException, GameDataException {
@@ -129,7 +127,7 @@ public class GameLoader {
             if(loadedRooms.containsKey(roomName)){
                 throw new GameDataException("Duplicate room name found in JSON: '" + roomName + "'");
             }
-            String roomDesc = (roomData.description==null||roomData.description.trim().isEmpty())? "An unknown loaction": roomData.description;
+            String roomDesc = (roomData.description==null||roomData.description.trim().isEmpty())? "An unknown location": roomData.description;
             Room room = new Room(roomName,roomDesc);
             loadedRooms.put(roomName,room);
             System.out.println("created room : "+roomName);
@@ -145,16 +143,20 @@ public class GameLoader {
             String currentRoomName=roomData.name.trim();
             Room room = loadedRooms.get(currentRoomName);
 
-            //link exits
+//            //link exits
             if(roomData.exits!=null) {
                 if (roomData == null || roomData.name == null || roomData.name.trim().isEmpty()) {
                     continue; // Skip invalid room data encountered before
                 }
                 for (String key : roomData.exits.keySet()) {
                     String direction = key.trim();
-                    String exit = roomData.exits.get(key);
-                    room.addExit(direction, exit);
-                    System.out.println("  Added exit from '" + currentRoomName + "' [" + direction.toLowerCase().trim() + "] to '" + exit.trim() + "'");
+                    Condition condition = roomData.exits.get(direction);
+                    room.addExit(direction, condition);
+                    if (condition.getTargetRoom() == null || condition.getTargetRoom().trim().isEmpty()) {
+                        throw new GameDataException("Exit in room '" + currentRoomName + "' has an invalid or missing target room.");
+                    }
+
+                    System.out.println("  Added exit from '" + currentRoomName + "' [" + direction.toLowerCase().trim() + "] to '" + condition.getTargetRoom().trim() + "'");
                 }
             }
             else{

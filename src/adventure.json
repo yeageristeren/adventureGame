@@ -108,16 +108,29 @@
       "name": "Basement Cell",
       "description": "A concrete prison cell. The only light comes from under a metal door (north). A vent cover (east) is loose.",
       "exits": {
-        "north": "Metal Door",
-        "east": "Vent Tunnel"
-      },
+        "north": {
+            "targetRoom": "Metal Door",
+            "requiredItem": "crowbar",
+            "failMsg": "The metal door is jammed shut. You need something strong to pry it open."
+          }
+        ,
+        "east": {
+            "targetRoom": "Vent Tunnel",
+            "requiredItem": "",
+            "failMsg": ""
+          }}
+      ,
       "items": ["wrench"]
     },
     {
       "name": "Metal Door",
       "description": "A reinforced steel door. The handle is broken off.",
       "exits": {
-        "south": "Basement Cell"
+        "south": {
+          "targetRoom": "Basement Cell",
+          "requiredItem": "",
+          "failMsg": ""
+        }
       },
       "items": []
     },
@@ -125,8 +138,16 @@
       "name": "Vent Tunnel",
       "description": "A cramped air duct. It leads to a larger room (north) and back to the cell (west).",
       "exits": {
-        "west": "Basement Cell",
-        "north": "Boiler Room"
+        "west": {
+          "targetRoom": "Basement Cell",
+          "requiredItem": "",
+          "failMsg": ""
+        },
+        "north": {
+          "targetRoom": "Boiler Room",
+          "requiredItem": "wrench",
+          "failMsg": "A rusted bolt jams the vent. Maybe something could loosen it."
+        }
       },
       "items": []
     },
@@ -134,8 +155,16 @@
       "name": "Boiler Room",
       "description": "A hot, noisy room with a broken generator (needs fuse). A toolbox sits on a shelf.",
       "exits": {
-        "south": "Vent Tunnel",
-        "west": "Utility Hall"
+        "south": {
+          "targetRoom": "Vent Tunnel",
+          "requiredItem": "",
+          "failMsg": ""
+        },
+        "west": {
+          "targetRoom": "Utility Hall",
+          "requiredItem": "fuse",
+          "failMsg": "The control panel is dead. You may need to restore power first."
+        }
       },
       "items": ["fuse", "generator key", "bolt cutters"]
     },
@@ -143,8 +172,16 @@
       "name": "Utility Hall",
       "description": "A long hallway with flickering lights. A chained door (north) blocks the exit.",
       "exits": {
-        "east": "Boiler Room",
-        "north": "Chained Door"
+        "east": {
+          "targetRoom": "Boiler Room",
+          "requiredItem": "",
+          "failMsg": ""
+        },
+        "north": {
+          "targetRoom": "Chained Door",
+          "requiredItem": "bolt cutters",
+          "failMsg": "Heavy chains lock the door. A strong cutter could help."
+        }
       },
       "items": ["crowbar"]
     },
@@ -152,8 +189,16 @@
       "name": "Chained Door",
       "description": "A heavy door secured by industrial chains. The links look cuttable.",
       "exits": {
-        "south": "Utility Hall",
-        "north": "Generator Room"
+        "south": {
+          "targetRoom": "Utility Hall",
+          "requiredItem": "",
+          "failMsg": ""
+        },
+        "north": {
+          "targetRoom": "Generator Room",
+          "requiredItem": "",
+          "failMsg": ""
+        }
       },
       "items": []
     },
@@ -161,8 +206,16 @@
       "name": "Generator Room",
       "description": "A dark room humming with electricity. The main generator (needs key) powers the exit gate (east).",
       "exits": {
-        "south": "Chained Door",
-        "east": "Exit Gate"
+        "south":{
+          "targetRoom": "Chained Door",
+          "requiredItem": "",
+          "failMsg": ""
+    },
+        "east": {
+          "targetRoom": "Exit Gate",
+          "requiredItem": "generator key",
+          "failMsg": "The exit gate is dangerously electrified. Maybe a control key could shut it down."
+        }
       },
       "items": []
     },
@@ -170,9 +223,14 @@
       "name": "Exit Gate",
       "description": "An electrified gate. The control panel sparks dangerously.",
       "exits": {
-        "west": "Generator Room"
+        "west": {
+          "targetRoom": "Generator Room",
+          "requiredItem": "",
+          "failMsg": ""
+        }
       },
       "items": []
     }
   ]
 }
+

@@ -7,7 +7,7 @@ import java.util.Map;
 public class Room {
     private String name;
     private String description;
-    private HashMap<String, String> exits = new HashMap<>();
+    private HashMap<String, Condition> exits = new HashMap<>();
     private ArrayList<Item> items = new ArrayList<>();
 
     public Room(String name, String description) {
@@ -28,7 +28,7 @@ public class Room {
     public String getDescription() {
         return this.description;
     }
-    public HashMap<String, String> getExits() {
+    public HashMap<String, Condition> getExits() {
         return this.exits;
     }
     public ArrayList<Item> getItems() {
@@ -47,11 +47,11 @@ public class Room {
         }
         return this.items.remove(item);//returns whether the item is removed
     }
-    public void addExit(String direction,String roomName){
-        if(roomName==null||direction==null){
+    public void addExit(String direction,Condition condition){
+        if(condition==null||direction==null){
             throw new IllegalArgumentException("Invalid item: NULL");
         }
-        exits.put(direction.trim().toLowerCase(),roomName.trim());
+        exits.put(direction.trim().toLowerCase(),condition);
     }
     public void setDescription(String description){
         this.description=description;
